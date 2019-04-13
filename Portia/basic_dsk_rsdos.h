@@ -3,7 +3,7 @@
 
 // This will be a generated file! Please edit source .ksy file and use kaitai-struct-compiler to rebuild
 
-#import "kaitai/kaitaistruct.h"
+#import "kaitaistruct.h"
 
 #if KAITAI_STRUCT_VERSION < 7000L
 #error "Incompatible Kaitai Struct C++/STL API: version 0.7 or later is required"
@@ -27,9 +27,7 @@ typedef NS_ENUM(uint8_t, ascii_flag_t) {
 @class granule_ptr_basic_dsk_rsdos_t;
 
 @interface basic_dsk_rsdos_t : kstruct
-
 {
-
 }
 
 -(void)_read;
