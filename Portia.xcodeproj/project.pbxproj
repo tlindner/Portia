@@ -14,10 +14,8 @@
 		771A57BA226293270067DC7B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 771A57B9226293270067DC7B /* Assets.xcassets */; };
 		771A57BD226293270067DC7B /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 771A57BB226293270067DC7B /* MainMenu.xib */; };
 		771A57C0226293270067DC7B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 771A57BF226293270067DC7B /* main.m */; };
-		771A57CA226293610067DC7B /* basic_dsk_rsdos.ksy in Resources */ = {isa = PBXBuildFile; fileRef = 771A57C8226293610067DC7B /* basic_dsk_rsdos.ksy */; };
 		771A57CB226293610067DC7B /* basic_dsk_rsdos.m in Sources */ = {isa = PBXBuildFile; fileRef = 771A57C9226293610067DC7B /* basic_dsk_rsdos.m */; };
-		771A57CD2262937E0067DC7B /* kaitai in Resources */ = {isa = PBXBuildFile; fileRef = 771A57CC2262937E0067DC7B /* kaitai */; };
-		771A57CF226293EF0067DC7B /* kaitaistream.m in Sources */ = {isa = PBXBuildFile; fileRef = 771A57CE226293EF0067DC7B /* kaitaistream.m */; };
+		771A57E02262967C0067DC7B /* kaitaistream.m in Sources */ = {isa = PBXBuildFile; fileRef = 771A57DF2262967C0067DC7B /* kaitaistream.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,8 +34,9 @@
 		771A57C7226293610067DC7B /* basic_dsk_rsdos.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = basic_dsk_rsdos.h; sourceTree = "<group>"; };
 		771A57C8226293610067DC7B /* basic_dsk_rsdos.ksy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = basic_dsk_rsdos.ksy; sourceTree = "<group>"; };
 		771A57C9226293610067DC7B /* basic_dsk_rsdos.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = basic_dsk_rsdos.m; sourceTree = "<group>"; };
-		771A57CC2262937E0067DC7B /* kaitai */ = {isa = PBXFileReference; lastKnownFileType = folder; path = kaitai; sourceTree = "<group>"; };
-		771A57CE226293EF0067DC7B /* kaitaistream.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = kaitaistream.m; path = Portia/kaitai/kaitaistream.m; sourceTree = "<group>"; };
+		771A57DD2262967C0067DC7B /* kaitaistream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = kaitaistream.h; path = kaitai/kaitaistream.h; sourceTree = "<group>"; };
+		771A57DE2262967C0067DC7B /* kaitaistruct.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = kaitaistruct.h; path = kaitai/kaitaistruct.h; sourceTree = "<group>"; };
+		771A57DF2262967C0067DC7B /* kaitaistream.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = kaitaistream.m; path = kaitai/kaitaistream.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,7 +53,6 @@
 		771A57A1226293270067DC7B = {
 			isa = PBXGroup;
 			children = (
-				771A57CE226293EF0067DC7B /* kaitaistream.m */,
 				771A57AC226293270067DC7B /* Portia */,
 				771A57AB226293270067DC7B /* Products */,
 			);
@@ -71,7 +69,9 @@
 		771A57AC226293270067DC7B /* Portia */ = {
 			isa = PBXGroup;
 			children = (
-				771A57CC2262937E0067DC7B /* kaitai */,
+				771A57DD2262967C0067DC7B /* kaitaistream.h */,
+				771A57DF2262967C0067DC7B /* kaitaistream.m */,
+				771A57DE2262967C0067DC7B /* kaitaistruct.h */,
 				771A57C7226293610067DC7B /* basic_dsk_rsdos.h */,
 				771A57C9226293610067DC7B /* basic_dsk_rsdos.m */,
 				771A57C8226293610067DC7B /* basic_dsk_rsdos.ksy */,
@@ -148,9 +148,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				771A57CD2262937E0067DC7B /* kaitai in Resources */,
 				771A57BA226293270067DC7B /* Assets.xcassets in Resources */,
-				771A57CA226293610067DC7B /* basic_dsk_rsdos.ksy in Resources */,
 				771A57B5226293270067DC7B /* Document.xib in Resources */,
 				771A57BD226293270067DC7B /* MainMenu.xib in Resources */,
 			);
@@ -168,7 +166,7 @@
 				771A57C0226293270067DC7B /* main.m in Sources */,
 				771A57CB226293610067DC7B /* basic_dsk_rsdos.m in Sources */,
 				771A57AF226293270067DC7B /* AppDelegate.m in Sources */,
-				771A57CF226293EF0067DC7B /* kaitaistream.m in Sources */,
+				771A57E02262967C0067DC7B /* kaitaistream.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
