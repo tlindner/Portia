@@ -26,6 +26,7 @@
 
 @interface kstream : NSObject
 {
+    unsigned long long _pos;
 }
 
 + (kstream *)streamWithURL:(NSURL *)url;
@@ -151,6 +152,7 @@
 +(NSData *)bytes_terminate:(NSData *)src term:(char)term include:(BOOL)include;
 +(NSString *)bytes_to_str:(NSData *)src withEncoding:(NSString *)src_enc;
 +(NSDictionary *)dictionaryFor:(NSNumber *)number dictionary:(NSDictionary *)dictionary;
++(void) throwIf:(NSData *)t smallerThan:(NSUInteger)v;
 
 #pragma mark Byte array processing
 
