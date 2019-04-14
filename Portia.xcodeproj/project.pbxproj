@@ -37,6 +37,7 @@
 		771A57DD2262967C0067DC7B /* kaitaistream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = kaitaistream.h; path = kaitai/kaitaistream.h; sourceTree = "<group>"; };
 		771A57DE2262967C0067DC7B /* kaitaistruct.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = kaitaistruct.h; path = kaitai/kaitaistruct.h; sourceTree = "<group>"; };
 		771A57DF2262967C0067DC7B /* kaitaistream.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = kaitaistream.m; path = kaitai/kaitaistream.m; sourceTree = "<group>"; };
+		771A57E12262BBBC0067DC7B /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,6 +54,7 @@
 		771A57A1226293270067DC7B = {
 			isa = PBXGroup;
 			children = (
+				771A57E12262BBBC0067DC7B /* README.md */,
 				771A57AC226293270067DC7B /* Portia */,
 				771A57AB226293270067DC7B /* Products */,
 			);

@@ -863,17 +863,17 @@ uint64_t kaitai_kstream_get_mask_ones(unsigned long n);
 {
     for (NSString *key in dictionary) {
         if ([dictionary[key] isEqualToNumber:number]) {
-            return @{ key : number};
+            return @{ @"enum" : key, @"value" : number};
         }
     }
     
-    return @{ @"Unknown type" : number };
+    return @{ @"enum" : @"unknown", @"value" : number };
 }
 
 + (void) throwIf:(NSData *)t smallerThan:(NSUInteger)v
 {
     if (t.length < v) {
-        NSException *myException = [NSException exceptionWithName:@"Read past EOF" reason:nil userInfo:nil];
+        NSException *myException = [NSException exceptionWithName:@"smaller than expected read" reason:nil userInfo:nil];
         @throw myException;
     }
 }
