@@ -9,11 +9,10 @@
     NSDictionary *_enumerations;
 }
 
-+ initialize:(kstream *)p__io;
-+ initialize:(kstream *)p__io withStruct:(kstruct *)p__parent;
 + initialize:(kstream *)p__io withStruct:(kstruct *)p__parent withRoot: p__root;
 
-- initWith:(kstream *)p__io withStruct:(kstruct *)p__parent withRoot: (kstruct *)p__root;
+- (instancetype)init;
+- (instancetype) initWith:(kstream *)p__io withStruct:(kstruct *)p__parent withRoot: (kstruct *)p__root NS_DESIGNATED_INITIALIZER;
 
 @property (strong) kstream *_io;
 @property (strong) kstruct *_parent;

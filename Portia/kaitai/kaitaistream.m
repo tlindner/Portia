@@ -37,12 +37,12 @@ uint64_t kaitai_kstream_get_mask_ones(unsigned long n);
 
 + (kstream *)streamWithFileHandle:(NSFileHandle *)io
 {
-	return [[kstream alloc] initWithFileHandle:io];
+    return [[kstream alloc] initWithFileHandle:io];
 }
 
 + (kstream *)streamWithData:(NSData *)data
 {
-	return [[kstream alloc] initWithData:data];
+    return [[kstream alloc] initWithData:data];
 }
 
 - (instancetype)init {
@@ -56,19 +56,19 @@ uint64_t kaitai_kstream_get_mask_ones(unsigned long n);
 
 - (kstream *)initWithFileHandle:(NSFileHandle *)io
 {
-	self.fh = io;
+    self.fh = io;
     self.size = [io seekToEndOfFile];
     [io seekToFileOffset:0];
     
-	return [self init];
+    return [self init];
 }
 
 - (kstream *)initWithData:(NSData *)data
 {
-	self.dh = data;
+    self.dh = data;
     self.size = data.length;
     
-	return [self init];
+    return [self init];
 }
 
 #pragma mark Stream positioning
@@ -136,7 +136,7 @@ uint64_t kaitai_kstream_get_mask_ones(unsigned long n);
     
     [(self.dh ? self.dh : [self.fh readDataOfLength:8]) getBytes:&t range:NSMakeRange(v_pos, 1)];
 
-    return [NSNumber numberWithChar:t];
+    return @(t);
 }
 
 #pragma mark Big-endian
@@ -159,7 +159,7 @@ uint64_t kaitai_kstream_get_mask_ones(unsigned long n);
     t = bswap_16(t);
 #endif
 
-    return [NSNumber numberWithShort:t];
+    return @(t);
 }
 
 - (NSNumber *) read_s4be
@@ -180,7 +180,7 @@ uint64_t kaitai_kstream_get_mask_ones(unsigned long n);
     t = bswap_32(t);
 #endif
 
-    return [NSNumber numberWithInteger:t];
+    return @(t);
 }
 
 - (NSNumber *) read_s8be
@@ -202,7 +202,7 @@ uint64_t kaitai_kstream_get_mask_ones(unsigned long n);
     t = bswap_64(t);
 #endif
     
-    return [NSNumber numberWithLongLong:t];
+    return @(t);
 }
 
 #pragma mark Little-endian
@@ -224,7 +224,7 @@ uint64_t kaitai_kstream_get_mask_ones(unsigned long n);
     t = bswap_16(t);
 #endif
 
-    return [NSNumber numberWithShort:t];
+    return @(t);
 }
 
 - (NSNumber *) read_s4le
@@ -245,7 +245,7 @@ uint64_t kaitai_kstream_get_mask_ones(unsigned long n);
     t = bswap_32(t);
 #endif
 
-    return [NSNumber numberWithInteger:t];
+    return @(t);
 }
 
 - (NSNumber *) read_s8le
@@ -266,7 +266,7 @@ uint64_t kaitai_kstream_get_mask_ones(unsigned long n);
     t = bswap_64(t);
 #endif
 
-    return [NSNumber numberWithLongLong:t];
+    return @(t);
 }
 
 #pragma mark Unsigned
@@ -285,7 +285,7 @@ uint64_t kaitai_kstream_get_mask_ones(unsigned long n);
     
     [(self.dh ? self.dh : [self.fh readDataOfLength:8]) getBytes:&t range:NSMakeRange(v_pos, 1)];
 
-    return [NSNumber numberWithUnsignedChar:t];
+    return @(t);
 }
 
 #pragma mark Big-endian
@@ -308,7 +308,7 @@ uint64_t kaitai_kstream_get_mask_ones(unsigned long n);
     t = bswap_16(t);
 #endif
 
-    return [NSNumber numberWithUnsignedShort:t];
+    return @(t);
 }
 
 - (NSNumber *) read_u4be
@@ -329,7 +329,7 @@ uint64_t kaitai_kstream_get_mask_ones(unsigned long n);
     t = bswap_32(t);
 #endif
 
-    return [NSNumber numberWithUnsignedInteger:t];
+    return @(t);
 }
 
 - (NSNumber *) read_u8be
@@ -350,7 +350,7 @@ uint64_t kaitai_kstream_get_mask_ones(unsigned long n);
     t = bswap_64(t);
 #endif
 
-    return [NSNumber numberWithUnsignedLongLong:t];
+    return @(t);
 }
 
 #pragma mark Little-endian
@@ -373,7 +373,7 @@ uint64_t kaitai_kstream_get_mask_ones(unsigned long n);
     t = bswap_16(t);
 #endif
 
-    return [NSNumber numberWithUnsignedShort:t];
+    return @(t);
 }
 
 - (NSNumber *) read_u4le
@@ -394,7 +394,7 @@ uint64_t kaitai_kstream_get_mask_ones(unsigned long n);
     t = bswap_32(t);
 #endif
 
-    return [NSNumber numberWithUnsignedInteger:t];
+    return @(t);
 }
 
 - (NSNumber *) read_u8le
@@ -415,7 +415,7 @@ uint64_t kaitai_kstream_get_mask_ones(unsigned long n);
     t = bswap_64(t);
 #endif
 
-    return [NSNumber numberWithUnsignedLongLong:t];
+    return @(t);
 }
 
 #pragma mark Floating point numbers
@@ -440,7 +440,7 @@ uint64_t kaitai_kstream_get_mask_ones(unsigned long n);
 #endif
 
     float *f = (float *)&t;
-    return [NSNumber numberWithFloat:*f];
+    return @(*f);
 }
 
 - (NSNumber *) read_f8be
@@ -462,7 +462,7 @@ uint64_t kaitai_kstream_get_mask_ones(unsigned long n);
 #endif
     
     double *d = (double *)&t;
-    return [NSNumber numberWithDouble:*d];
+    return @(*d);
 }
 
 #pragma mark Little-endian
@@ -486,7 +486,7 @@ uint64_t kaitai_kstream_get_mask_ones(unsigned long n);
 #endif
 
     float *f = (float *)&t;
-    return [NSNumber numberWithFloat:*f];
+    return @(*f);
 }
 
 - (NSNumber *) read_f8le
@@ -508,7 +508,7 @@ uint64_t kaitai_kstream_get_mask_ones(unsigned long n);
 #endif
 
     double *d = (double *)&t;
-    return [NSNumber numberWithDouble:*d];
+    return @(*d);
 }
 
 #pragma mark Unaligned bit values
@@ -657,7 +657,7 @@ uint64_t kaitai_kstream_get_mask_ones(unsigned long n);
 
 -(NSData *)ensure_fixed_contents:(NSData *)expected
 {
-    NSData *actual = [self read_bytes:[expected length]];
+    NSData *actual = [self read_bytes:expected.length];
     
     if (![actual isEqualToData:expected]) {
         NSException *myException = [NSException exceptionWithName:@"ensure_fixed_contents: actual data does not match expected data" reason:nil userInfo:nil];
@@ -670,7 +670,7 @@ uint64_t kaitai_kstream_get_mask_ones(unsigned long n);
 +(NSData *)bytes_strip_right:(NSData *)src padByte:(unsigned char)pad_byte
 {
     size_t new_len = src.length;
-    char *src_ptr = (char *)[src bytes];
+    char *src_ptr = (char *)src.bytes;
     
     while (new_len > 0 && src_ptr[new_len - 1] == pad_byte)
         new_len--;
@@ -682,7 +682,7 @@ uint64_t kaitai_kstream_get_mask_ones(unsigned long n);
 {
     size_t new_len = 0;
     size_t max_len = src.length;
-    char *src_ptr = (char *)[src bytes];
+    char *src_ptr = (char *)src.bytes;
     
     while (new_len < max_len && src_ptr[new_len] != term)
         new_len++;
@@ -826,9 +826,9 @@ uint64_t kaitai_kstream_get_mask_ones(unsigned long n);
 
 - (NSData *)reverse:(NSData *)val
 {
-    const char *bytes = [val bytes];
+    const char *bytes = val.bytes;
     
-    NSUInteger datalength = [val length];
+    NSUInteger datalength = val.length;
     
     char *reverseBytes = malloc(sizeof(char) * datalength);
     NSUInteger index = datalength - 1;
@@ -842,7 +842,7 @@ uint64_t kaitai_kstream_get_mask_ones(unsigned long n);
 +(NSString *)bytes_to_str:(NSData *)src withEncoding:(NSString *)src_enc
 {
     NSStringEncoding e = NSUTF8StringEncoding;
-    NSString *lc_enc =[src_enc lowercaseString];
+    NSString *lc_enc =src_enc.lowercaseString;
     
     if ([lc_enc isEqualToString:@"ascii"]) {
         e = NSMacOSRomanStringEncoding; /* OS X's ASCII is strictly 7 bit */
@@ -859,10 +859,10 @@ uint64_t kaitai_kstream_get_mask_ones(unsigned long n);
     return [[NSString alloc] initWithData:src encoding:e];
 }
 
-+(NSDictionary *)dictionaryFor:(NSNumber *)number dictionary:(NSDictionary *)dictionary
++ (NSDictionary *)dictionaryFor:(NSNumber *)number dictionary:(NSDictionary *)dictionary
 {
     for (NSString *key in dictionary) {
-        if ([[dictionary objectForKey:key] isEqualToNumber:number]) {
+        if ([dictionary[key] isEqualToNumber:number]) {
             return @{ key : number};
         }
     }
@@ -870,7 +870,7 @@ uint64_t kaitai_kstream_get_mask_ones(unsigned long n);
     return @{ @"Unknown type" : number };
 }
 
-+(void) throwIf:(NSData *)t smallerThan:(NSUInteger)v
++ (void) throwIf:(NSData *)t smallerThan:(NSUInteger)v
 {
     if (t.length < v) {
         NSException *myException = [NSException exceptionWithName:@"Read past EOF" reason:nil userInfo:nil];
@@ -882,22 +882,20 @@ uint64_t kaitai_kstream_get_mask_ones(unsigned long n);
 
 @implementation kstruct
 
-+ initialize:(kstream *)p__io
-{
-    return [[kstruct alloc] initWith:p__io withStruct:nil withRoot:nil];
-}
-
-+ initialize:(kstream *)p__io withStruct:(kstruct *)p__parent
-{
-    return [[kstruct alloc] initWith:p__io withStruct:p__parent withRoot:nil];
-}
-
 + initialize:(kstream *)p__io withStruct:(kstruct *)p__parent withRoot: p__root
 {
     return [[kstruct alloc] initWith:p__io withStruct:p__parent withRoot:p__root];
 }
 
-- initWith:(kstream *)p__io withStruct:(kstruct *)p__parent withRoot: (kstruct *)p__root
+- (instancetype)init
+{
+    self = [self initWith:nil withStruct:nil withRoot:nil];
+    if (self) {
+    }
+    return self;
+
+}
+- (instancetype) initWith:(kstream *)p__io withStruct:(kstruct *)p__parent withRoot:(kstruct *)p__root
 {
     self = [super init];
     if (self) {

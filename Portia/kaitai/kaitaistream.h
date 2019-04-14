@@ -80,45 +80,45 @@
     // Signed
     // ------------------------------------------------------------------------
 
-- (NSNumber *) read_s1;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSNumber *read_s1;
 
     // ........................................................................
     // Big-endian
     // ........................................................................
 
-- (NSNumber *) read_s2be;
-- (NSNumber *) read_s4be;
-- (NSNumber *) read_s8be;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSNumber *read_s2be;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSNumber *read_s4be;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSNumber *read_s8be;
 
     // ........................................................................
     // Little-endian
     // ........................................................................
 
-- (NSNumber *) read_s2le;
-- (NSNumber *) read_s4le;
-- (NSNumber *) read_s8le;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSNumber *read_s2le;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSNumber *read_s4le;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSNumber *read_s8le;
 
     // ------------------------------------------------------------------------
     // Unsigned
     // ------------------------------------------------------------------------
 
-- (NSNumber *) read_u1;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSNumber *read_u1;
 
     // ........................................................................
     // Big-endian
     // ........................................................................
 
-- (NSNumber *) read_u2be;
-- (NSNumber *) read_u4be;
-- (NSNumber *) read_u8be;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSNumber *read_u2be;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSNumber *read_u4be;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSNumber *read_u8be;
 
     // ........................................................................
     // Little-endian
     // ........................................................................
 
-- (NSNumber *) read_u2le;
-- (NSNumber *) read_u4le;
-- (NSNumber *) read_u8le;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSNumber *read_u2le;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSNumber *read_u4le;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSNumber *read_u8le;
 
 #pragma mark Floating point numbers
 
@@ -126,33 +126,33 @@
     // Big-endian
     // ........................................................................
 
-- (NSNumber *) read_f4be;
-- (NSNumber *) read_f8be;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSNumber *read_f4be;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSNumber *read_f8be;
 
     // ........................................................................
     // Little-endian
     // ........................................................................
 
-- (NSNumber *) read_f4le;
-- (NSNumber *) read_f8le;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSNumber *read_f4le;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSNumber *read_f8le;
 
 #pragma mark Unaligned bit values
 
--(void)alignToByte;
--(NSNumber *)read_bits_int:(NSUInteger)n;
+- (void)alignToByte;
+- (NSNumber *)read_bits_int:(NSUInteger)n;
 
 #pragma mark Byte arrays
 
--(NSData *)read_bytes:(NSUInteger)len;
--(NSData *)read_bytes_full;
--(NSData *)read_bytes_term:(char)character include:(BOOL)include consume:(BOOL)consume eosErr:(BOOL)eos_error;
--(NSData *)ensure_fixed_contents:(NSData *)expected;
+- (NSData *)read_bytes:(NSUInteger)len;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSData *read_bytes_full;
+- (NSData *)read_bytes_term:(char)character include:(BOOL)include consume:(BOOL)consume eosErr:(BOOL)eos_error;
+- (NSData *)ensure_fixed_contents:(NSData *)expected;
 
-+(NSData *)bytes_strip_right:(NSData *)src padByte:(unsigned char)pad_byte;
-+(NSData *)bytes_terminate:(NSData *)src term:(char)term include:(BOOL)include;
-+(NSString *)bytes_to_str:(NSData *)src withEncoding:(NSString *)src_enc;
-+(NSDictionary *)dictionaryFor:(NSNumber *)number dictionary:(NSDictionary *)dictionary;
-+(void) throwIf:(NSData *)t smallerThan:(NSUInteger)v;
++ (NSData *)bytes_strip_right:(NSData *)src padByte:(unsigned char)pad_byte;
++ (NSData *)bytes_terminate:(NSData *)src term:(char)term include:(BOOL)include;
++ (NSString *)bytes_to_str:(NSData *)src withEncoding:(NSString *)src_enc;
++ (NSDictionary *)dictionaryFor:(NSNumber *)number dictionary:(NSDictionary *)dictionary;
++ (void) throwIf:(NSData *)t smallerThan:(NSUInteger)v;
 
 #pragma mark Byte array processing
 
@@ -163,7 +163,7 @@
      * @param key value to XOR with
      * @return processed data
      */
--(NSData *)process_xor_one:(NSData *)data withKey:(uint8_t)key;
+- (NSData *)process_xor_one:(NSData *)data withKey:(uint8_t)key;
 
     /**
      * Performs a XOR processing with given data, XORing every byte of input with a key
@@ -173,7 +173,7 @@
      * @param key array of bytes to XOR with
      * @return processed data
      */
--(NSData *)process_xor_many:(NSData *)data withKey:(NSData *)key;
+- (NSData *)process_xor_many:(NSData *)data withKey:(NSData *)key;
 
     /**
      * Performs a circular left rotation shift for a given buffer by a given amount of bits,
@@ -183,7 +183,7 @@
      * @param amount number of bits to shift by
      * @return copy of source array with requested shift applied
      */
--(NSData *)process_rotate_left:(NSData *)data withAmount:(int)amount;
+- (NSData *)process_rotate_left:(NSData *)data withAmount:(int)amount;
 
 #ifdef KS_ZLIB
     /**
@@ -192,7 +192,7 @@
      * @return unpacked data
      * @throws IOException
      */
--(NSData *)process_zlib(NSData *)data;
+- (NSData *)process_zlib(NSData *)data;
 #endif
 
 /**
@@ -200,7 +200,7 @@
  * and divisor `b`. Divisor `b` is expected to be positive. The
  * result is always 0 <= x <= b - 1.
  */
--(int) modA:(int)a b:(int)b;
+- (int) modA:(int)a b:(int)b;
 
 /**
  * Converts given integer `val` to a decimal string representation.
