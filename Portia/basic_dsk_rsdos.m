@@ -113,7 +113,7 @@
     self.table = [NSMutableArray arrayWithCapacity:l_table];
     for ( int i=0; i < l_table; i++)
     {
-        [self.table addObject:[self._io read_u1]];
+        [self.table addObject:(self._io).read_u1];
     }
     self.reserved = [self._io read_bytes:188];
 }
@@ -135,10 +135,10 @@
 {
     self.name = [kstream bytes_to_str:[kstream bytes_terminate:[kstream bytes_strip_right:[self._io read_bytes:8] padByte:32] term:32 include:NO] withEncoding:@"ASCII"];
     self.extension = [kstream bytes_to_str:[kstream bytes_terminate:[kstream bytes_strip_right:[self._io read_bytes:3] padByte:32] term:32 include:NO] withEncoding:@"ASCII"];
-    self.file_type = [kstream dictionaryFor:[self._io read_u1] dictionary:(self._root.enumerations)[@"FILE_TYPE"]];
-    self.file_type = [kstream dictionaryFor:[self._io read_u1] dictionary:(self._root.enumerations)[@"ASCII_FLAG"]];
+    self.file_type = [kstream dictionaryFor:(self._io).read_u1 dictionary:(self._root.enumerations)[@"FILE_TYPE"]];
+    self.file_type = [kstream dictionaryFor:(self._io).read_u1 dictionary:(self._root.enumerations)[@"ASCII_FLAG"]];
     self.ofs_granule = [granule_ptr_basic_dsk_rsdos_t initialize:self._io withStruct:self withRoot:self._root];
-    self.bytes_in_last_sector = [self._io read_u2be];
+    self.bytes_in_last_sector = (self._io).read_u2be;
     self.reserved = [self._io read_bytes:16];
 }
 
@@ -162,7 +162,7 @@
 
 -(void)_read
 {
-    self.current_ptr = [self._io read_u1];
+    self.current_ptr = (self._io).read_u1;
 }
 
 -(NSData *)body
