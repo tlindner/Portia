@@ -7,6 +7,17 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "kaitaistruct.h"
+#import "kStructNode.h"
 
-@interface Document : NSPersistentDocument
+
+@interface Document : NSPersistentDocument <NSBrowserDelegate>
+
+-(IBAction)browserAction:(id)sender;
+
+@property (weak) IBOutlet NSBrowser *browser;
+@property (unsafe_unretained) IBOutlet NSTextView *textView;
+
+@property (strong) kstruct *str;
+@property (strong) kStructNode *rootNode;
 @end

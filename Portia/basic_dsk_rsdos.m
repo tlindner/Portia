@@ -2,11 +2,11 @@
 
 @implementation basic_dsk_rsdos_t
 
-@dynamic enumerations;
+@dynamic _enumerations;
 @dynamic _root;
 @dynamic _parent;
 
-- (NSDictionary *)enumerations
+- (NSDictionary *)_enumerations
 {
     if (_enumerations == nil) {
         _enumerations = @{ @"FILE_TYPE" : @{ @"BASIC_PROGRAM": @(0),
@@ -19,6 +19,16 @@
     }
     
     return _enumerations;
+}
+
++ initialize:(kstream *)p__io withStruct:(kstruct *)p__parent withRoot: p__root
+{
+    return [[basic_dsk_rsdos_t alloc] initWith:p__io withStruct:p__parent withRoot:p__root];
+}
+
++ (instancetype) structWith:(kstream *)stream
+{
+    return [[basic_dsk_rsdos_t alloc] initWith:stream withStruct:nil withRoot:nil];
 }
 
 - (instancetype) initWith:(kstream *)p__io withStruct:(kstruct *)p__parent withRoot:(basic_dsk_rsdos_t *)p__root
@@ -52,16 +62,20 @@
     {
         [self.files addObject:[file_basic_dsk_rsdos_t initialize:self._io withStruct:self withRoot:self._root]];
     }
-    self.reserved2 = [self._io read_bytes:(((9 * 256) - (self.files.count * 32)) + (7 * 256))];
+    self.reserved2 = [self._io read_bytes:(7 * 256)];
 
     self._raw_granules2 = [NSMutableArray array];
     self._io__raw_granules2 = [NSMutableArray array];
     self.granules2 = [NSMutableArray array];
     {
         int i=0;
-        while (self._io.eof)
-        {
-            [self._raw_granules2 addObject:[self._io read_bytes:((9 * 256))]];
+        while (!self._io.eof) {
+            @try {
+                [self._raw_granules2 addObject:[self._io read_bytes:((9 * 256))]];
+            } @catch (NSException *exception) {
+                [NSException raise:exception.name format:@"%@: failed to create index: %d of granules2", exception.name, i];
+            }
+
             kstream *io__raw_granules2 = [kstream streamWithData:(self._raw_granules2).lastObject];
             [self._io__raw_granules2 addObject:io__raw_granules2];
             [self.granules2 addObject:[granule_basic_dsk_rsdos_t initialize:io__raw_granules2 withStruct:self withRoot:self._root]];
@@ -76,6 +90,16 @@
 
 @dynamic _root;
 @dynamic _parent;
+
++ initialize:(kstream *)p__io withStruct:(kstruct *)p__parent withRoot: p__root
+{
+    return [[granule_basic_dsk_rsdos_t alloc] initWith:p__io withStruct:p__parent withRoot:p__root];
+}
+
++ (instancetype) structWith:(kstream *)stream
+{
+    return [[granule_basic_dsk_rsdos_t alloc] initWith:stream withStruct:nil withRoot:nil];
+}
 
 - (instancetype) initWith:(kstream *)p__io withStruct:(basic_dsk_rsdos_t *)p__parent withRoot:(basic_dsk_rsdos_t *)p__root
 {
@@ -97,6 +121,16 @@
 
 @dynamic _root;
 @dynamic _parent;
+
++ initialize:(kstream *)p__io withStruct:(kstruct *)p__parent withRoot: p__root
+{
+    return [[file_allocation_table_basic_dsk_rsdos_t alloc] initWith:p__io withStruct:p__parent withRoot:p__root];
+}
+
++ (instancetype) structWith:(kstream *)stream
+{
+    return [[file_allocation_table_basic_dsk_rsdos_t alloc] initWith:stream withStruct:nil withRoot:nil];
+}
 
 - (instancetype) initWith:(kstream *)p__io withStruct:(basic_dsk_rsdos_t *)p__parent withRoot:(basic_dsk_rsdos_t *)p__root
 {
@@ -122,6 +156,16 @@
 
 @implementation file_basic_dsk_rsdos_t
 
++ initialize:(kstream *)p__io withStruct:(kstruct *)p__parent withRoot: p__root
+{
+    return [[file_basic_dsk_rsdos_t alloc] initWith:p__io withStruct:p__parent withRoot:p__root];
+}
+
++ (instancetype) structWith:(kstream *)stream
+{
+    return [[file_basic_dsk_rsdos_t alloc] initWith:stream withStruct:nil withRoot:nil];
+}
+
 - (instancetype) initWith:(kstream *)p__io withStruct:(kstruct *)p__parent withRoot:(kstruct *)p__root
 {
     self = [super initWith:p__io withStruct:p__parent withRoot:p__root];
@@ -135,8 +179,8 @@
 {
     self.name = [kstream bytes_to_str:[kstream bytes_terminate:[kstream bytes_strip_right:[self._io read_bytes:8] padByte:32] term:32 include:NO] withEncoding:@"ASCII"];
     self.extension = [kstream bytes_to_str:[kstream bytes_terminate:[kstream bytes_strip_right:[self._io read_bytes:3] padByte:32] term:32 include:NO] withEncoding:@"ASCII"];
-    self.file_type = [kstream dictionaryFor:(self._io).read_u1 dictionary:(self._root.enumerations)[@"FILE_TYPE"]];
-    self.file_type = [kstream dictionaryFor:(self._io).read_u1 dictionary:(self._root.enumerations)[@"ASCII_FLAG"]];
+    self.file_type = [kstream dictionaryFor:(self._io).read_u1 dictionary:(self._root._enumerations)[@"FILE_TYPE"]];
+    self.ascii_flag = [kstream dictionaryFor:(self._io).read_u1 dictionary:(self._root._enumerations)[@"ASCII_FLAG"]];
     self.ofs_granule = [granule_ptr_basic_dsk_rsdos_t initialize:self._io withStruct:self withRoot:self._root];
     self.bytes_in_last_sector = (self._io).read_u2be;
     self.reserved = [self._io read_bytes:16];
@@ -150,6 +194,16 @@
 @dynamic _parent;
 @dynamic body;
 @dynamic next;
+
++ initialize:(kstream *)p__io withStruct:(kstruct *)p__parent withRoot: p__root
+{
+    return [[granule_ptr_basic_dsk_rsdos_t alloc] initWith:p__io withStruct:p__parent withRoot:p__root];
+}
+
++ (instancetype) structWith:(kstream *)stream
+{
+    return [[granule_ptr_basic_dsk_rsdos_t alloc] initWith:stream withStruct:nil withRoot:nil];
+}
 
 - (instancetype) initWith:(kstream *)p__io withStruct:(file_basic_dsk_rsdos_t *)p__parent withRoot:(basic_dsk_rsdos_t *)p__root
 {
@@ -172,7 +226,7 @@
     if (self.current_ptr.intValue < 68) {
         kstream *io = (self.current_ptr.intValue < 34) ? (self._root.granules1)[self.current_ptr.intValue]._io : ((self._root.granules2)[self.current_ptr.intValue - 34]._io);
         [io seek:0];
-        _body = [io read_bytes:self._root.fat.table[self.current_ptr.intValue & 192].intValue == 0 ? ((9 * 256)) : self._root.fat.table[self.current_ptr.intValue & 63 - 1].intValue * 256 + self._parent.bytes_in_last_sector.intValue];
+        _body = [io read_bytes:self._root.fat.table[self.current_ptr.intValue & 192].intValue == 0 ? ((9 * 256)) : ((self._root.fat.table[self.current_ptr.intValue].intValue & 63) - 1) * 256 + self._parent.bytes_in_last_sector.intValue];
     }
     
     return _body;
@@ -194,15 +248,3 @@
 }
 
 @end
-
-
-
-
-
-
-
-
-
-
-
-

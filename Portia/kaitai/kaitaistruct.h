@@ -6,10 +6,8 @@
 
 @interface kstruct : NSObject
 {
-    NSDictionary *_enumerations;
-}
 
-+ initialize:(kstream *)p__io withStruct:(kstruct *)p__parent withRoot: p__root;
+}
 
 - (instancetype)init;
 - (instancetype) initWith:(kstream *)p__io withStruct:(kstruct *)p__parent withRoot: (kstruct *)p__root NS_DESIGNATED_INITIALIZER;
@@ -17,8 +15,6 @@
 @property (strong) kstream *_io;
 @property (strong) kstruct *_parent;
 @property (strong) kstruct *_root;
-
-@property (strong, readonly) NSDictionary* enumerations;
 
 @end
 

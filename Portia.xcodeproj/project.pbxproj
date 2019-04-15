@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		77184FB922637B1D0029D265 /* kStructNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 77184FB822637B1D0029D265 /* kStructNode.m */; };
 		771A57AF226293270067DC7B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 771A57AE226293270067DC7B /* AppDelegate.m */; };
 		771A57B2226293270067DC7B /* Document.m in Sources */ = {isa = PBXBuildFile; fileRef = 771A57B1226293270067DC7B /* Document.m */; };
 		771A57B5226293270067DC7B /* Document.xib in Resources */ = {isa = PBXBuildFile; fileRef = 771A57B3226293270067DC7B /* Document.xib */; };
@@ -16,9 +17,12 @@
 		771A57C0226293270067DC7B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 771A57BF226293270067DC7B /* main.m */; };
 		771A57CB226293610067DC7B /* basic_dsk_rsdos.m in Sources */ = {isa = PBXBuildFile; fileRef = 771A57C9226293610067DC7B /* basic_dsk_rsdos.m */; };
 		771A57E02262967C0067DC7B /* kaitaistream.m in Sources */ = {isa = PBXBuildFile; fileRef = 771A57DF2262967C0067DC7B /* kaitaistream.m */; };
+		771A57E32262E5230067DC7B /* PropertyUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 771A57E22262E5230067DC7B /* PropertyUtil.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		77184FB822637B1D0029D265 /* kStructNode.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = kStructNode.m; sourceTree = "<group>"; };
+		77184FBA22637B6B0029D265 /* kStructNode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = kStructNode.h; sourceTree = "<group>"; };
 		771A57AA226293270067DC7B /* Portia.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Portia.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		771A57AD226293270067DC7B /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		771A57AE226293270067DC7B /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -38,6 +42,8 @@
 		771A57DE2262967C0067DC7B /* kaitaistruct.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = kaitaistruct.h; path = kaitai/kaitaistruct.h; sourceTree = "<group>"; };
 		771A57DF2262967C0067DC7B /* kaitaistream.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = kaitaistream.m; path = kaitai/kaitaistream.m; sourceTree = "<group>"; };
 		771A57E12262BBBC0067DC7B /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		771A57E22262E5230067DC7B /* PropertyUtil.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PropertyUtil.m; sourceTree = "<group>"; };
+		771A57E42262E5550067DC7B /* PropertyUtil.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PropertyUtil.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,6 +87,10 @@
 				771A57AE226293270067DC7B /* AppDelegate.m */,
 				771A57B0226293270067DC7B /* Document.h */,
 				771A57B1226293270067DC7B /* Document.m */,
+				77184FBA22637B6B0029D265 /* kStructNode.h */,
+				77184FB822637B1D0029D265 /* kStructNode.m */,
+				771A57E42262E5550067DC7B /* PropertyUtil.h */,
+				771A57E22262E5230067DC7B /* PropertyUtil.m */,
 				771A57B3226293270067DC7B /* Document.xib */,
 				771A57B9226293270067DC7B /* Assets.xcassets */,
 				771A57BB226293270067DC7B /* MainMenu.xib */,
@@ -124,6 +134,11 @@
 					771A57A9226293270067DC7B = {
 						CreatedOnToolsVersion = 9.2;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.Sandbox = {
+								enabled = 0;
+							};
+						};
 					};
 				};
 			};
@@ -167,8 +182,10 @@
 				771A57B2226293270067DC7B /* Document.m in Sources */,
 				771A57C0226293270067DC7B /* main.m in Sources */,
 				771A57CB226293610067DC7B /* basic_dsk_rsdos.m in Sources */,
+				771A57E32262E5230067DC7B /* PropertyUtil.m in Sources */,
 				771A57AF226293270067DC7B /* AppDelegate.m in Sources */,
 				771A57E02262967C0067DC7B /* kaitaistream.m in Sources */,
+				77184FB922637B1D0029D265 /* kStructNode.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -301,7 +318,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = Portia/Portia.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = Portia/Info.plist;
@@ -315,7 +331,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = Portia/Portia.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = Portia/Info.plist;

@@ -5,6 +5,10 @@
 
 #import "kaitaistruct.h"
 
+@interface kstruct (kstruct_granule_basic_dsk_rsdos_t)
+  @property (strong) NSDictionary *_enumerations;
+@end
+
 #if KAITAI_STRUCT_VERSION < 7000L
 #error "Incompatible Kaitai Struct C++/STL API: version 0.7 or later is required"
 #endif
@@ -28,10 +32,14 @@ typedef NS_ENUM(uint8_t, ascii_flag_t) {
 
 @interface basic_dsk_rsdos_t : kstruct
 {
+    NSDictionary *_enumerations;
 }
 
++ (instancetype) initialize:(kstream *)p__io withStruct:(kstruct *)p__parent withRoot:(kstruct *)p__root;
++ (instancetype) structWith:(kstream *)stream;
 -(void)_read;
 
+@property (strong) NSDictionary *_enumerations;
 @property (strong) kstruct *_parent;
 @property (strong) basic_dsk_rsdos_t *_root;
 
@@ -55,6 +63,8 @@ typedef NS_ENUM(uint8_t, ascii_flag_t) {
 {
 }
 
++ (instancetype) initialize:(kstream *)p__io withStruct:(kstruct *)p__parent withRoot:(kstruct *)p__root;
++ (instancetype) structWith:(kstream *)stream;
 -(void)_read;
 
 @property (strong) basic_dsk_rsdos_t *_parent;
@@ -68,6 +78,8 @@ typedef NS_ENUM(uint8_t, ascii_flag_t) {
 {
 }
 
++ (instancetype) initialize:(kstream *)p__io withStruct:(kstruct *)p__parent withRoot:(kstruct *)p__root;
++ (instancetype) structWith:(kstream *)stream;
 -(void)_read;
 
 @property (strong) basic_dsk_rsdos_t *_parent;
@@ -82,6 +94,8 @@ typedef NS_ENUM(uint8_t, ascii_flag_t) {
 {
 }
 
++ (instancetype) initialize:(kstream *)p__io withStruct:(kstruct *)p__parent withRoot:(kstruct *)p__root;
++ (instancetype) structWith:(kstream *)stream;
 -(void)_read;
 
 @property (strong) NSString *name;
@@ -100,6 +114,8 @@ typedef NS_ENUM(uint8_t, ascii_flag_t) {
     granule_ptr_basic_dsk_rsdos_t *_next;
 }
 
++ initialize:(kstream *)p__io withStruct:(kstruct *)p__parent withRoot:(kstruct *)p__root;
++ (instancetype) structWith:(kstream *)stream;
 -(void)_read;
 
 @property (strong) file_basic_dsk_rsdos_t *_parent;

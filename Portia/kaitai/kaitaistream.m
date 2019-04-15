@@ -31,6 +31,9 @@ uint64_t kaitai_kstream_get_mask_ones(unsigned long n);
     if (io) {
         return [[kstream alloc] initWithFileHandle:io];
     }
+    else {
+        NSLog( @"error: %@", myErr);
+    }
     
     return nil;
 }
@@ -134,7 +137,7 @@ uint64_t kaitai_kstream_get_mask_ones(unsigned long n);
         v_pos = 0;
     }
     
-    [(self.dh ? self.dh : [self.fh readDataOfLength:8]) getBytes:&t range:NSMakeRange(v_pos, 1)];
+    [(self.dh ? self.dh : [self.fh readDataOfLength:1]) getBytes:&t range:NSMakeRange(v_pos, 1)];
 
     return @(t);
 }
@@ -153,7 +156,7 @@ uint64_t kaitai_kstream_get_mask_ones(unsigned long n);
         v_pos = 0;
     }
     
-    [(self.dh ? self.dh : [self.fh readDataOfLength:8]) getBytes:&t range:NSMakeRange(v_pos, 2)];
+    [(self.dh ? self.dh : [self.fh readDataOfLength:2]) getBytes:&t range:NSMakeRange(v_pos, 2)];
 
 #if __BYTE_ORDER == __LITTLE_ENDIAN
     t = bswap_16(t);
@@ -174,7 +177,7 @@ uint64_t kaitai_kstream_get_mask_ones(unsigned long n);
         v_pos = 0;
     }
     
-    [(self.dh ? self.dh : [self.fh readDataOfLength:8]) getBytes:&t range:NSMakeRange(v_pos, 4)];
+    [(self.dh ? self.dh : [self.fh readDataOfLength:4]) getBytes:&t range:NSMakeRange(v_pos, 4)];
 
 #if __BYTE_ORDER == __LITTLE_ENDIAN
     t = bswap_32(t);
@@ -218,7 +221,7 @@ uint64_t kaitai_kstream_get_mask_ones(unsigned long n);
         v_pos = 0;
     }
     
-    [(self.dh ? self.dh : [self.fh readDataOfLength:8]) getBytes:&t range:NSMakeRange(v_pos, 2)];
+    [(self.dh ? self.dh : [self.fh readDataOfLength:2]) getBytes:&t range:NSMakeRange(v_pos, 2)];
 
 #if __BYTE_ORDER == __BIG_ENDIAN
     t = bswap_16(t);
@@ -239,7 +242,7 @@ uint64_t kaitai_kstream_get_mask_ones(unsigned long n);
         v_pos = 0;
     }
     
-    [(self.dh ? self.dh : [self.fh readDataOfLength:8]) getBytes:&t range:NSMakeRange(v_pos, 4)];
+    [(self.dh ? self.dh : [self.fh readDataOfLength:4]) getBytes:&t range:NSMakeRange(v_pos, 4)];
 
 #if __BYTE_ORDER == __BIG_ENDIAN
     t = bswap_32(t);
@@ -283,7 +286,7 @@ uint64_t kaitai_kstream_get_mask_ones(unsigned long n);
         v_pos = 0;
     }
     
-    [(self.dh ? self.dh : [self.fh readDataOfLength:8]) getBytes:&t range:NSMakeRange(v_pos, 1)];
+    [(self.dh ? self.dh : [self.fh readDataOfLength:1]) getBytes:&t range:NSMakeRange(v_pos, 1)];
 
     return @(t);
 }
@@ -302,7 +305,7 @@ uint64_t kaitai_kstream_get_mask_ones(unsigned long n);
         v_pos = 0;
     }
     
-    [(self.dh ? self.dh : [self.fh readDataOfLength:8]) getBytes:&t range:NSMakeRange(v_pos, 2)];
+    [(self.dh ? self.dh : [self.fh readDataOfLength:2]) getBytes:&t range:NSMakeRange(v_pos, 2)];
 
 #if __BYTE_ORDER == __LITTLE_ENDIAN
     t = bswap_16(t);
@@ -323,7 +326,7 @@ uint64_t kaitai_kstream_get_mask_ones(unsigned long n);
         v_pos = 0;
     }
     
-    [(self.dh ? self.dh : [self.fh readDataOfLength:8]) getBytes:&t range:NSMakeRange(v_pos, 4)];
+    [(self.dh ? self.dh : [self.fh readDataOfLength:4]) getBytes:&t range:NSMakeRange(v_pos, 4)];
 
 #if __BYTE_ORDER == __LITTLE_ENDIAN
     t = bswap_32(t);
@@ -367,7 +370,7 @@ uint64_t kaitai_kstream_get_mask_ones(unsigned long n);
         v_pos = 0;
     }
     
-    [(self.dh ? self.dh : [self.fh readDataOfLength:8]) getBytes:&t range:NSMakeRange(v_pos, 2)];
+    [(self.dh ? self.dh : [self.fh readDataOfLength:2]) getBytes:&t range:NSMakeRange(v_pos, 2)];
 
 #if __BYTE_ORDER == __BIG_ENDIAN
     t = bswap_16(t);
@@ -388,7 +391,7 @@ uint64_t kaitai_kstream_get_mask_ones(unsigned long n);
         v_pos = 0;
     }
     
-    [(self.dh ? self.dh : [self.fh readDataOfLength:8]) getBytes:&t range:NSMakeRange(v_pos, 4)];
+    [(self.dh ? self.dh : [self.fh readDataOfLength:4]) getBytes:&t range:NSMakeRange(v_pos, 4)];
 
 #if __BYTE_ORDER == __BIG_ENDIAN
     t = bswap_32(t);
@@ -433,7 +436,7 @@ uint64_t kaitai_kstream_get_mask_ones(unsigned long n);
         v_pos = 0;
     }
     
-    [(self.dh ? self.dh : [self.fh readDataOfLength:8]) getBytes:&t range:NSMakeRange(v_pos, 4)];
+    [(self.dh ? self.dh : [self.fh readDataOfLength:4]) getBytes:&t range:NSMakeRange(v_pos, 4)];
 
 #if __BYTE_ORDER == __LITTLE_ENDIAN
     t = bswap_32(t);
@@ -479,7 +482,7 @@ uint64_t kaitai_kstream_get_mask_ones(unsigned long n);
         v_pos = 0;
     }
     
-    [(self.dh ? self.dh : [self.fh readDataOfLength:8]) getBytes:&t range:NSMakeRange(v_pos, 4)];
+    [(self.dh ? self.dh : [self.fh readDataOfLength:4]) getBytes:&t range:NSMakeRange(v_pos, 4)];
 
 #if __BYTE_ORDER == __BIG_ENDIAN
     t = bswap_32(t);
@@ -541,7 +544,7 @@ uint64_t kaitai_kstream_get_mask_ones(unsigned long n);
             v_pos = 0;
         }
         
-        [(self.dh ? self.dh : [self.fh readDataOfLength:8]) getBytes:&buf range:NSMakeRange(v_pos, bytes_needed)];
+        [(self.dh ? self.dh : [self.fh readDataOfLength:bytes_needed]) getBytes:&buf range:NSMakeRange(v_pos, bytes_needed)];
         
         for (int i = 0; i < bytes_needed; i++) {
             uint8_t b = buf[i];
@@ -812,7 +815,7 @@ uint64_t kaitai_kstream_get_mask_ones(unsigned long n);
 -(int) modA:(int)a b:(int)b;
 {
     if (b <= 0)
-        NSLog( @"Throw mod: divisor b <= 0");
+        [NSException raise:@"modulus b <= 0" format:@""];
     int r = a % b;
     if (r < 0)
         r += b;
@@ -853,7 +856,8 @@ uint64_t kaitai_kstream_get_mask_ones(unsigned long n);
     } else if ([lc_enc isEqualToString:@"utf-16be"]) {
         e = NSUTF16BigEndianStringEncoding;
     } else {
-        NSLog( @"Throw unsupported string encoding" );
+        [NSException raise:@"throw unsupported string encoding" format:@""];
+        NSLog( @"" );
     }
     
     return [[NSString alloc] initWithData:src encoding:e];
@@ -873,7 +877,7 @@ uint64_t kaitai_kstream_get_mask_ones(unsigned long n);
 + (void) throwIf:(NSData *)t smallerThan:(NSUInteger)v
 {
     if (t.length < v) {
-        NSException *myException = [NSException exceptionWithName:@"smaller than expected read" reason:nil userInfo:nil];
+        NSException *myException = [NSException exceptionWithName:[NSString stringWithFormat:@"smaller than expected read: %lu < %lu", (unsigned long)t.length, (unsigned long)v] reason:nil userInfo:nil];
         @throw myException;
     }
 }
@@ -881,11 +885,6 @@ uint64_t kaitai_kstream_get_mask_ones(unsigned long n);
 @end
 
 @implementation kstruct
-
-+ initialize:(kstream *)p__io withStruct:(kstruct *)p__parent withRoot: p__root
-{
-    return [[kstruct alloc] initWith:p__io withStruct:p__parent withRoot:p__root];
-}
 
 - (instancetype)init
 {
@@ -895,14 +894,22 @@ uint64_t kaitai_kstream_get_mask_ones(unsigned long n);
     return self;
 
 }
+
 - (instancetype) initWith:(kstream *)p__io withStruct:(kstruct *)p__parent withRoot:(kstruct *)p__root
 {
     self = [super init];
     if (self) {
         self._io = p__io;
-        self._root = p__root;
         self._parent = p__parent;
-    }
+        
+        if (p__root == nil) {
+            self._root = self;
+        }
+        else {
+            self._root = p__root;
+        }
+     }
+
     return self;
 }
 
