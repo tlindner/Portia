@@ -856,8 +856,7 @@ uint64_t kaitai_kstream_get_mask_ones(unsigned long n);
     } else if ([lc_enc isEqualToString:@"utf-16be"]) {
         e = NSUTF16BigEndianStringEncoding;
     } else {
-        [NSException raise:@"throw unsupported string encoding" format:@""];
-        NSLog( @"" );
+        [NSException raise:@"unsupported string encoding" format:@"unsupported string encoding: %@", lc_enc];
     }
     
     return [[NSString alloc] initWithData:src encoding:e];
