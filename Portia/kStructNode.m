@@ -11,21 +11,16 @@
 
 @interface kStructNode ()
 
-//@property (strong) NSArray *propertiesOrder;
-//@property (strong) NSDictionary *properties;
 @property (assign) BOOL childrenDirty;
 @property (strong) NSMutableDictionary *internalChildren;
 @property(strong) NSString *displayName;
 @end
-
 
 #pragma mark -
 
 @implementation kStructNode
 
 @dynamic displayName, children, isLeafItem;
-
-
 
 - (instancetype)init {
     

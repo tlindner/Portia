@@ -23,16 +23,6 @@ NSString * NSDataToHex(NSData *data);
     self = [super init];
     if (self) {
         // Add your subclass-specific initialization here.
-
-        NSURL *fu = [NSURL fileURLWithPath:@"/Users/tlindner/Public/mame/SSC.dsk"];
-        kstream *s = [kstream streamWithURL:fu];
-        @try {
-            self.str = [basic_dsk_rsdos_t structWith:s];
-
-        } @catch (NSException *exception) {
-            NSLog( @"exception: %@", exception );
-            [self.textView setString:[exception description]];
-        }
     }
     
     return self;
@@ -95,10 +85,21 @@ NSString * NSDataToHex(NSData *data);
 }
 
 - (id)rootItemForBrowser:(NSBrowser *)browser {
-    
+
     if (self.rootNode == nil) {
+        @try {
+            NSURL *fu = [NSURL fileURLWithPath:@"/Users/tlindner/Public/mame/SSC.dsk"];
+            kstream *s = [kstream streamWithURL:fu];
+            self.str = [basic_dsk_rsdos_t structWith:s];
+            
+        } @catch (NSException *exception) {
+            NSLog( @"exception: %@", exception );
+            [self.textView setString:[exception description]];
+        }
+        
         _rootNode = [[kStructNode alloc] initWithStruct:self.str andName:@"root"];
     }
+    
     return self.rootNode;
 }
 

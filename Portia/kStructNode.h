@@ -12,7 +12,7 @@
 #import <Cocoa/Cocoa.h>
 #import "kaitaistruct.h"
 
-// This is a simple wrapper around the Kaitai Struct. Its main purpose is to cache children fro display in a NSBrowser.
+// This is a simple wrapper around the Kaitai Struct. Its main purpose is to cache children for display in a NSBrowser.
 @interface kStructNode : NSObject <NSToolbarDelegate>
 {
     NSString *_displayName;

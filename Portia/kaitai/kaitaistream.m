@@ -32,7 +32,7 @@ uint64_t kaitai_kstream_get_mask_ones(unsigned long n);
         return [[kstream alloc] initWithFileHandle:io];
     }
     else {
-        NSLog( @"error: %@", myErr);
+        [NSException raise:@"Count not Open URL" format:@"%@", myErr];
     }
     
     return nil;
@@ -959,7 +959,5 @@ uint64_t kaitai_kstream_get_mask_ones(unsigned long n) {
     
     return @{ @"enum" : @"unknown", @"value" : self };
 }
-
-
 
 @end
