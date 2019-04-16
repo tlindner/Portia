@@ -68,7 +68,7 @@
     } else if ([[self.theObject class] isSubclassOfClass:[NSString class]]) {
             displayName = [NSString stringWithFormat:@"%@: %@", _displayName, self.theObject];
     } else if ([[self.theObject class] isSubclassOfClass:[NSDictionary class]]) {
-        displayName = [NSString stringWithFormat:@"ENUM: %@, value: %@", self.theObject[@"enum"], self.theObject[@"value"]];
+        displayName = [NSString stringWithFormat:@"%@: %@, value: %@", _displayName, self.theObject[@"enum"], self.theObject[@"value"]];
     } else if ([[self.theObject class] isSubclassOfClass:[NSNumber class]]) {
         displayName = [NSString stringWithFormat:@"%@: %@", _displayName, [self.theObject stringValue]]; ;
     } else { /* kstruct class, NSArray, NSData */

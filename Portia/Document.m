@@ -71,7 +71,7 @@ NSString * NSDataToHex(NSData *data);
         } else if ([[object class] isSubclassOfClass:[NSNumber class]]) {
             result = [object description];
         } else if ([[object class] isSubclassOfClass:[NSData class]]) {
-            result = [object description];
+            result = NSDataToHex(object);
         } else { /* kstruct class, NSArray */
             result = [object description];
         }
@@ -131,24 +131,28 @@ NSString * NSDataToHex(NSData *data) {
     
     len = data.length;
     bytes = (char*)data.bytes;
-    malloc_length = ((len / 16) + 1) * (5 + (3*16) + 2 + (1 * 16) + 1);
+    malloc_length = ((len / 16) + 1) * (5 + (5*8) + 2 + (1 * 16) + 1);
     
     buf = malloc(malloc_length + 1);
     
-    for (i=0; i<len; i = i + 16) {
+    for (i=0; i<len && ptr < malloc_length; i = i + 16) {
         ptr += sprintf(&(buf[ptr]), "%4.4x ", i );
         
-        for (j=0; j<16 && i+j<len; i++) {
-            ptr += sprintf(&(buf[ptr]), "%2.2x ", bytes[i+j]);
+        for (j=0; j<16 && i+j<len && ptr < malloc_length; j += 2) {
+            ptr += sprintf(&(buf[ptr]), "%2.2x%2.2x ", bytes[i+j], bytes[i+j+1]);
+        }
+        
+        for (; j<16 && ptr < malloc_length; j += 2) {
+            ptr += sprintf(&(buf[ptr]), "     ");
         }
         
         ptr += sprintf(&(buf[ptr]), "  " );
  
-        for (j=0; j<16 && i+j<len; i++) {
+        for (j=0; j<16 && i+j<len && ptr < malloc_length; j++) {
             ptr += sprintf(&(buf[ptr]), "%c", isprint(bytes[i+j]) ? bytes[i+j] : '.' );
         }
         
-        ptr += sprintf(&(buf[ptr]), "\n" );
+        ptr += sprintf(&(buf[ptr]), "\r" );
      }
     
     NSString *result = [[NSString alloc] initWithBytes:buf length:malloc_length encoding:NSASCIIStringEncoding];

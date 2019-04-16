@@ -147,43 +147,7 @@
 @property (NS_NONATOMIC_IOSONLY, readonly, copy) NSData *read_bytes_full;
 - (NSData *)read_bytes_term:(char)character include:(BOOL)include consume:(BOOL)consume eosErr:(BOOL)eos_error;
 - (NSData *)ensure_fixed_contents:(NSData *)expected;
-
-+ (NSData *)bytes_strip_right:(NSData *)src padByte:(unsigned char)pad_byte;
-+ (NSData *)bytes_terminate:(NSData *)src term:(char)term include:(BOOL)include;
-+ (NSString *)bytes_to_str:(NSData *)src withEncoding:(NSString *)src_enc;
-+ (NSDictionary *)dictionaryFor:(NSNumber *)number dictionary:(NSDictionary *)dictionary;
 + (void) throwIf:(NSData *)t smallerThan:(NSUInteger)v;
-
-#pragma mark Byte array processing
-
-    /**
-     * Performs a XOR processing with given data, XORing every byte of input with a single
-     * given value.
-     * @param data data to process
-     * @param key value to XOR with
-     * @return processed data
-     */
-- (NSData *)process_xor_one:(NSData *)data withKey:(uint8_t)key;
-
-    /**
-     * Performs a XOR processing with given data, XORing every byte of input with a key
-     * array, repeating key array many times, if necessary (i.e. if data array is longer
-     * than key array).
-     * @param data data to process
-     * @param key array of bytes to XOR with
-     * @return processed data
-     */
-- (NSData *)process_xor_many:(NSData *)data withKey:(NSData *)key;
-
-    /**
-     * Performs a circular left rotation shift for a given buffer by a given amount of bits,
-     * using groups of 1 bytes each time. Right circular rotation should be performed
-     * using this procedure with corrected amount.
-     * @param data source data to process
-     * @param amount number of bits to shift by
-     * @return copy of source array with requested shift applied
-     */
-- (NSData *)process_rotate_left:(NSData *)data withAmount:(int)amount;
 
 #ifdef KS_ZLIB
     /**
@@ -202,19 +166,72 @@
  */
 - (int) modA:(int)a b:(int)b;
 
+@end
+
+@interface NSString (KSStringPrivateMethods)
+
 /**
  * Converts given integer `val` to a decimal string representation.
  * Should be used in place of std::to_string() (which is available only
  * since C++11) in older C++ implementations.
  */
-- (NSString *)to_string:(int)val;
+- (NSNumber *)ksToNumberWithBase:(int)base;
 
 /**
- * Reverses given string `val`, so that the first character becomes the
+ * Reverses given string, so that the first character becomes the
  * last and the last one becomes the first. This should be used to avoid
  * the need of local variables at the caller.
  */
-- (NSData *)reverse:(NSData *)val;
+- (NSString *)ksReverse;
+
+@end
+
+@interface NSData (KSDataPrivateMethods)
+
+- (NSString *)ksBytesToStringWithEncoding:(NSString *)src_enc;
+
+/**
+ * Reverses given data, so that the first byte becomes the
+ * last and the last one becomes the first. This should be used to avoid
+ * the need of local variables at the caller.
+ */
+- (NSData *)ksReverse;
+
+/**
+ * Performs a XOR processing with given data, XORing every byte of input with a single
+ * given value.
+ * @param key value to XOR with
+ * @return processed data
+ */
+- (NSData *)ksProcessXorOneWithKey:(uint8_t)key;
+
+/**
+ * Performs a XOR processing with given data, XORing every byte of input with a key
+ * array, repeating key array many times, if necessary (i.e. if data array is longer
+ * than key array).
+ * @param key array of bytes to XOR with
+ * @return processed data
+ */
+- (NSData *)ksProcessXorManyWithKey:(NSData *)key;
+
+/**
+ * Performs a circular left rotation shift for a given buffer by a given amount of bits,
+ * using groups of 1 bytes each time. Right circular rotation should be performed
+ * using this procedure with corrected amount.
+ * @param amount number of bits to shift by
+ * @return copy of source array with requested shift applied
+ */
+- (NSData *)ksProcessRotateLeftWithAmount:(int)amount;
+
+- (NSData *)KSBytesStripRightPadByte:(unsigned char)pad_byte;
+
+- (NSData *)KSBytesTerminateTerm:(char)term include:(BOOL)include;
+
+@end
+
+@interface NSNumber (KSNumberPrivateMethods)
+
+- (NSDictionary *)ksENUMWithDictionary:(NSDictionary *)dictionary;
 
 @end
 

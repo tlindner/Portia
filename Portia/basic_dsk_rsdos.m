@@ -14,8 +14,8 @@
                                              @"LANGUAGE_PROGRAM" : @(2),
                                              @"TEXT_EDITOR_SOURCE_FILE": @(3)},
                            
-                           @"ASCII_FLAG" : @{ @"ASCII_FLAG_BINARY" : @(0),
-                                              @"ASCII_FLAG_ASCII" : @(255)} };
+                           @"ASCII_FLAG" : @{ @"BINARY" : @(0),
+                                              @"ASCII" : @(255)} };
     }
     
     return _enumerations;
@@ -177,10 +177,10 @@
 
 -(void)_read
 {
-    self.name = [kstream bytes_to_str:[kstream bytes_terminate:[kstream bytes_strip_right:[self._io read_bytes:8] padByte:32] term:32 include:NO] withEncoding:@"ASCII"];
-    self.extension = [kstream bytes_to_str:[kstream bytes_terminate:[kstream bytes_strip_right:[self._io read_bytes:3] padByte:32] term:32 include:NO] withEncoding:@"ASCII"];
-    self.file_type = [kstream dictionaryFor:(self._io).read_u1 dictionary:(self._root._enumerations)[@"FILE_TYPE"]];
-    self.ascii_flag = [kstream dictionaryFor:(self._io).read_u1 dictionary:(self._root._enumerations)[@"ASCII_FLAG"]];
+    self.name = [[[[self._io read_bytes:8] KSBytesStripRightPadByte:32] KSBytesTerminateTerm:32 include:NO] ksBytesToStringWithEncoding:@"ASCII"];
+    self.extension = [[[[self._io read_bytes:3] KSBytesStripRightPadByte:32] KSBytesTerminateTerm:32 include:NO] ksBytesToStringWithEncoding:@"ASCII"];
+    self.file_type = [(self._io).read_u1 ksENUMWithDictionary:(self._root._enumerations)[@"FILE_TYPE"]];
+    self.ascii_flag = [(self._io).read_u1 ksENUMWithDictionary:(self._root._enumerations)[@"ASCII_FLAG"]];
     self.ofs_granule = [granule_ptr_basic_dsk_rsdos_t initialize:self._io withStruct:self withRoot:self._root];
     self.bytes_in_last_sector = (self._io).read_u2be;
     self.reserved = [self._io read_bytes:16];

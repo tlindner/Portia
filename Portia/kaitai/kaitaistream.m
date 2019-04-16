@@ -670,95 +670,6 @@ uint64_t kaitai_kstream_get_mask_ones(unsigned long n);
     return actual;
 }
 
-+(NSData *)bytes_strip_right:(NSData *)src padByte:(unsigned char)pad_byte
-{
-    size_t new_len = src.length;
-    char *src_ptr = (char *)src.bytes;
-    
-    while (new_len > 0 && src_ptr[new_len - 1] == pad_byte)
-        new_len--;
-    NSRange range = NSMakeRange(0, new_len);
-    return [src subdataWithRange:range];
-}
-
-+(NSData *)bytes_terminate:(NSData *)src term:(char)term include:(BOOL)include;
-{
-    size_t new_len = 0;
-    size_t max_len = src.length;
-    char *src_ptr = (char *)src.bytes;
-    
-    while (new_len < max_len && src_ptr[new_len] != term)
-        new_len++;
-    
-    if (include && new_len < max_len)
-        new_len++;
-    
-    NSRange range = NSMakeRange(0, new_len);
-    return [src subdataWithRange:range];
-}
-
--(NSData *)process_xor_one:(NSData *)data withKey:(uint8_t)key
-{
-    size_t len = data.length;
-    unsigned char *buf = malloc(len);
-    
-    if (!buf) {
-        NSException *myException = [NSException exceptionWithName:@"process_xor_one: out of memory" reason:nil userInfo:nil];
-        @throw myException;
-    }
-    
-    unsigned char *src = (unsigned char *)data.bytes;
-
-    for (size_t i = 0; i < len; i++)
-        buf[i] = src[i] ^ key;
-    
-    return [NSData dataWithBytesNoCopy:buf length:len];
-}
-
--(NSData *)process_xor_many:(NSData *)data withKey:(NSData *)key
-{
-    size_t len = data.length;
-    size_t kl = key.length;
-    unsigned char *data_buf = (unsigned char *)data.bytes;
-    unsigned char *key_buf = (unsigned char *)key.bytes;
-
-    unsigned char *buf = malloc(len);
-    
-    if (!buf) {
-        NSException *myException = [NSException exceptionWithName:@"process_xor_many: out of memory" reason:nil userInfo:nil];
-        @throw myException;
-    }
-
-    size_t ki = 0;
-    for (size_t i = 0; i < len; i++) {
-        buf[i] = data_buf[i] ^ key_buf[ki];
-        ki++;
-        if (ki >= kl)
-            ki = 0;
-    }
-    
-    return [NSData dataWithBytesNoCopy:buf length:len];
-}
-
--(NSData *)process_rotate_left:(NSData *)data withAmount:(int)amount
-{
-    size_t len = data.length;
-    unsigned char *buf = malloc(len);
-    unsigned char *data_buf = (unsigned char *)data.bytes;
-
-    if (!buf) {
-        NSException *myException = [NSException exceptionWithName:@"process_rotate_left: out of memory" reason:nil userInfo:nil];
-        @throw myException;
-    }
-
-    for (size_t i = 0; i < len; i++) {
-        uint8_t bits = data_buf[i];
-        buf[i] = (bits << amount) | (bits >> (8 - amount));
-    }
-    
-    return [NSData dataWithBytesNoCopy:buf length:len];
-}
-
 #ifdef KS_ZLIB
 #include <zlib.h>
 
@@ -822,11 +733,6 @@ uint64_t kaitai_kstream_get_mask_ones(unsigned long n);
     return r;
 }
 
-- (NSString *)to_string:(int)val
-{
-    return [NSString stringWithFormat:@"%d", val];
-}
-
 - (NSData *)reverse:(NSData *)val
 {
     const char *bytes = val.bytes;
@@ -840,37 +746,6 @@ uint64_t kaitai_kstream_get_mask_ones(unsigned long n);
         reverseBytes[index--] = bytes[i];
 
     return [NSData dataWithBytesNoCopy:reverseBytes length: datalength];
-}
-
-+(NSString *)bytes_to_str:(NSData *)src withEncoding:(NSString *)src_enc
-{
-    NSStringEncoding e = NSUTF8StringEncoding;
-    NSString *lc_enc =src_enc.lowercaseString;
-    
-    if ([lc_enc isEqualToString:@"ascii"]) {
-        e = NSMacOSRomanStringEncoding; /* OS X's ASCII is strictly 7 bit */
-    } else if ([lc_enc isEqualToString:@"utf-8"]) {
-        e = NSUTF8StringEncoding;
-    } else if ([lc_enc isEqualToString:@"utf-16le"]) {
-        e = NSUTF16LittleEndianStringEncoding;
-    } else if ([lc_enc isEqualToString:@"utf-16be"]) {
-        e = NSUTF16BigEndianStringEncoding;
-    } else {
-        [NSException raise:@"unsupported string encoding" format:@"unsupported string encoding: %@", lc_enc];
-    }
-    
-    return [[NSString alloc] initWithData:src encoding:e];
-}
-
-+ (NSDictionary *)dictionaryFor:(NSNumber *)number dictionary:(NSDictionary *)dictionary
-{
-    for (NSString *key in dictionary) {
-        if ([dictionary[key] isEqualToNumber:number]) {
-            return @{ @"enum" : key, @"value" : number};
-        }
-    }
-    
-    return @{ @"enum" : @"unknown", @"value" : number };
 }
 
 + (void) throwIf:(NSData *)t smallerThan:(NSUInteger)v
@@ -922,3 +797,169 @@ uint64_t kaitai_kstream_get_mask_ones(unsigned long n) {
     }
 }
 
+@implementation NSString (KSStringPrivateMethods)
+
+- (NSNumber *)ksToNumberWithBase:(int)base
+{
+    if (base == 10) {
+        return @(self.intValue);
+    } else {
+        return @(strtol(self.UTF8String, NULL, base));
+    }
+}
+
+- (NSString *)ksReverse
+{
+    /* https://stackoverflow.com/a/6720235 */
+    NSMutableString *reversedString = [NSMutableString string];
+    NSInteger charIndex = [self length];
+    NSRange subStrRange = {0, 1};
+    while (charIndex > 0) {
+        charIndex--;
+        subStrRange.location = charIndex;
+        [reversedString appendString:[self substringWithRange:subStrRange]];
+    }
+    return reversedString;
+}
+
+@end
+
+@implementation NSData (KSDataPrivateMethods)
+
+- (NSString *)ksBytesToStringWithEncoding:(NSString *)src_enc
+{
+    NSStringEncoding e = NSUTF8StringEncoding;
+    NSString *lc_enc =src_enc.lowercaseString;
+    
+    if ([lc_enc isEqualToString:@"ascii"]) {
+        e = NSMacOSRomanStringEncoding; /* OS X's ASCII is strictly 7 bit */
+    } else if ([lc_enc isEqualToString:@"utf-8"]) {
+        e = NSUTF8StringEncoding;
+    } else if ([lc_enc isEqualToString:@"utf-16le"]) {
+        e = NSUTF16LittleEndianStringEncoding;
+    } else if ([lc_enc isEqualToString:@"utf-16be"]) {
+        e = NSUTF16BigEndianStringEncoding;
+    } else {
+        [NSException raise:@"unsupported string encoding" format:@"unsupported string encoding: %@", lc_enc];
+    }
+    
+    return [[NSString alloc] initWithData:self encoding:e];
+}
+
+- (NSData *)ksReverse
+{
+    /* https://stackoverflow.com/a/27152342 */
+    NSMutableData *data = [[NSMutableData alloc] init];
+    for(int i = (int)self.length - 1; i >=0; i--){
+        [data appendBytes: &self.bytes[i] length:1];
+    }
+    return data;
+}
+
+- (NSData *)ksProcessXorOneWithKey:(uint8_t)key
+{
+    size_t len = self.length;
+    unsigned char *buf = malloc(len);
+    
+    if (!buf) {
+        NSException *myException = [NSException exceptionWithName:@"process_xor_one: out of memory" reason:nil userInfo:nil];
+        @throw myException;
+    }
+    
+    unsigned char *src = (unsigned char *)self.bytes;
+    
+    for (size_t i = 0; i < len; i++)
+        buf[i] = src[i] ^ key;
+    
+    return [NSData dataWithBytesNoCopy:buf length:len];
+}
+
+- (NSData *)ksProcessXorManyWithKey:(NSData *)key
+{
+    size_t len = self.length;
+    size_t kl = key.length;
+    unsigned char *self_buf = (unsigned char *)self.bytes;
+    unsigned char *key_buf = (unsigned char *)key.bytes;
+    
+    unsigned char *buf = malloc(len);
+    
+    if (!buf) {
+        NSException *myException = [NSException exceptionWithName:@"process_xor_many: out of memory" reason:nil userInfo:nil];
+        @throw myException;
+    }
+    
+    size_t ki = 0;
+    for (size_t i = 0; i < len; i++) {
+        buf[i] = self_buf[i] ^ key_buf[ki];
+        ki++;
+        if (ki >= kl)
+            ki = 0;
+    }
+    
+    return [NSData dataWithBytesNoCopy:buf length:len];
+}
+
+- (NSData *)ksProcessRotateLeftWithAmount:(int)amount
+{
+    size_t len = self.length;
+    unsigned char *buf = malloc(len);
+    unsigned char *self_buf = (unsigned char *)self.bytes;
+    
+    if (!buf) {
+        NSException *myException = [NSException exceptionWithName:@"process_rotate_left: out of memory" reason:nil userInfo:nil];
+        @throw myException;
+    }
+    
+    for (size_t i = 0; i < len; i++) {
+        uint8_t bits = self_buf[i];
+        buf[i] = (bits << amount) | (bits >> (8 - amount));
+    }
+    
+    return [NSData dataWithBytesNoCopy:buf length:len];
+}
+
+- (NSData *)KSBytesStripRightPadByte:(unsigned char)pad_byte
+{
+    size_t new_len = self.length;
+    char *self_ptr = (char *)self.bytes;
+    
+    while (new_len > 0 && self_ptr[new_len - 1] == pad_byte)
+        new_len--;
+    NSRange range = NSMakeRange(0, new_len);
+    return [self subdataWithRange:range];
+}
+
+- (NSData *)KSBytesTerminateTerm:(char)term include:(BOOL)include;
+{
+    size_t new_len = 0;
+    size_t max_len = self.length;
+    char *self_ptr = (char *)self.bytes;
+    
+    while (new_len < max_len && self_ptr[new_len] != term)
+        new_len++;
+    
+    if (include && new_len < max_len)
+        new_len++;
+    
+    NSRange range = NSMakeRange(0, new_len);
+    return [self subdataWithRange:range];
+}
+
+@end
+
+@implementation NSNumber (KSNumberPrivateMethods)
+
+- (NSDictionary *)ksENUMWithDictionary:(NSDictionary *)dictionary
+{
+    for (NSString *key in dictionary) {
+        if ([dictionary[key] isEqualToNumber:self]) {
+            return @{ @"enum" : key, @"value" : self};
+        }
+    }
+    
+    return @{ @"enum" : @"unknown", @"value" : self };
+}
+
+
+
+@end
