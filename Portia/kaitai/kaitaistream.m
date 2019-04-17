@@ -787,6 +787,21 @@ uint64_t kaitai_kstream_get_mask_ones(unsigned long n);
     return self;
 }
 
+- (void)_read
+{
+    [NSException raise:@"runtime error: _read needs to be implented in subclass" format:@""];
+}
+
+- (void)_read_le
+{
+    [NSException raise:@"runtime error: _read_le needs to be implented in subclass" format:@""];
+}
+
+- (void)_read_be
+{
+    [NSException raise:@"runtime error: _read_be needs to be implented in subclass" format:@""];
+}
+
 @end
 
 uint64_t kaitai_kstream_get_mask_ones(unsigned long n) {

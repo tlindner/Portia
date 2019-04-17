@@ -5,13 +5,13 @@
 
 #import "kaitaistruct.h"
 
-@interface kstruct (kstruct_granule_basic_dsk_rsdos_t)
-  @property (strong) NSDictionary *_enumerations;
-@end
-
 #if KAITAI_STRUCT_VERSION < 7000L
 #error "Incompatible Kaitai Struct C++/STL API: version 0.7 or later is required"
 #endif
+
+@interface kstruct (kstruct_granule_basic_dsk_rsdos_t)
+@property (strong) NSDictionary *_enumerations;
+@end
 
 typedef NS_ENUM(uint8_t, file_type_t) {
         FILE_TYPE_BASIC_PROGRAM = 0,
@@ -36,7 +36,7 @@ typedef NS_ENUM(uint8_t, ascii_flag_t) {
 }
 
 + (instancetype) initialize:(kstream *)p__io withStruct:(kstruct *)p__parent withRoot:(kstruct *)p__root;
-+ (instancetype) structWith:(kstream *)stream;
++ (instancetype) structWith:(kstream *)p__io;
 -(void)_read;
 
 @property (strong) NSDictionary *_enumerations;
@@ -64,7 +64,7 @@ typedef NS_ENUM(uint8_t, ascii_flag_t) {
 }
 
 + (instancetype) initialize:(kstream *)p__io withStruct:(kstruct *)p__parent withRoot:(kstruct *)p__root;
-+ (instancetype) structWith:(kstream *)stream;
++ (instancetype) structWith:(kstream *)p__io;
 -(void)_read;
 
 @property (strong) basic_dsk_rsdos_t *_parent;
@@ -79,7 +79,7 @@ typedef NS_ENUM(uint8_t, ascii_flag_t) {
 }
 
 + (instancetype) initialize:(kstream *)p__io withStruct:(kstruct *)p__parent withRoot:(kstruct *)p__root;
-+ (instancetype) structWith:(kstream *)stream;
++ (instancetype) structWith:(kstream *)p__io;
 -(void)_read;
 
 @property (strong) basic_dsk_rsdos_t *_parent;
@@ -95,7 +95,7 @@ typedef NS_ENUM(uint8_t, ascii_flag_t) {
 }
 
 + (instancetype) initialize:(kstream *)p__io withStruct:(kstruct *)p__parent withRoot:(kstruct *)p__root;
-+ (instancetype) structWith:(kstream *)stream;
++ (instancetype) structWith:(kstream *)p__io;
 -(void)_read;
 
 @property (strong) NSString *name;
@@ -115,7 +115,7 @@ typedef NS_ENUM(uint8_t, ascii_flag_t) {
 }
 
 + initialize:(kstream *)p__io withStruct:(kstruct *)p__parent withRoot:(kstruct *)p__root;
-+ (instancetype) structWith:(kstream *)stream;
++ (instancetype) structWith:(kstream *)p__io;
 -(void)_read;
 
 @property (strong) file_basic_dsk_rsdos_t *_parent;

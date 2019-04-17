@@ -6,8 +6,7 @@
 @dynamic _root;
 @dynamic _parent;
 
-- (NSDictionary *)_enumerations
-{
+- (NSDictionary *)_enumerations {
     if (_enumerations == nil) {
         _enumerations = @{ @"FILE_TYPE" : @{ @"BASIC_PROGRAM": @(0),
                                              @"BASIC_DATA_FILE" : @(1),
@@ -21,18 +20,15 @@
     return _enumerations;
 }
 
-+ initialize:(kstream *)p__io withStruct:(kstruct *)p__parent withRoot: p__root
-{
++ (instancetype) initialize:(kstream *)p__io withStruct:(kstruct *)p__parent withRoot: p__root {
     return [[basic_dsk_rsdos_t alloc] initWith:p__io withStruct:p__parent withRoot:p__root];
 }
 
-+ (instancetype) structWith:(kstream *)stream
-{
-    return [[basic_dsk_rsdos_t alloc] initWith:stream withStruct:nil withRoot:nil];
++ (instancetype) structWith:(kstream *)p__io {
+    return [[basic_dsk_rsdos_t alloc] initWith:p__io withStruct:nil withRoot:nil];
 }
 
-- (instancetype) initWith:(kstream *)p__io withStruct:(kstruct *)p__parent withRoot:(basic_dsk_rsdos_t *)p__root
-{
+- (instancetype) initWith:(kstream *)p__io withStruct:(kstruct *)p__parent withRoot:(basic_dsk_rsdos_t *)p__root {
     self = [super initWith:p__io withStruct:p__parent withRoot:p__root];
     if (self) {
         [self _read];
@@ -40,8 +36,7 @@
     return self;
 }
 
--(void)_read
-{
+-(void)_read {
     NSUInteger l_granules = (17 * 2);
     self._raw_granules1 = [NSMutableArray arrayWithCapacity:l_granules];
     self._io__raw_granules1 = [NSMutableArray arrayWithCapacity:l_granules];
@@ -58,16 +53,14 @@
     self.fat = [file_allocation_table_basic_dsk_rsdos_t initialize:self._io__raw_fat withStruct:self withRoot:self._root];
     NSUInteger l_files = 72;
     self.files = [NSMutableArray arrayWithCapacity:l_files];
-    for(int i = 0; i < l_files; i++)
-    {
+    for(int i = 0; i < l_files; i++) {
         [self.files addObject:[file_basic_dsk_rsdos_t initialize:self._io withStruct:self withRoot:self._root]];
     }
     self.reserved2 = [self._io read_bytes:(7 * 256)];
 
     self._raw_granules2 = [NSMutableArray array];
     self._io__raw_granules2 = [NSMutableArray array];
-    self.granules2 = [NSMutableArray array];
-    {
+    self.granules2 = [NSMutableArray array]; {
         int i=0;
         while (!self._io.eof) {
             @try {
@@ -91,18 +84,15 @@
 @dynamic _root;
 @dynamic _parent;
 
-+ initialize:(kstream *)p__io withStruct:(kstruct *)p__parent withRoot: p__root
-{
++ (instancetype) initialize:(kstream *)p__io withStruct:(kstruct *)p__parent withRoot: p__root {
     return [[granule_basic_dsk_rsdos_t alloc] initWith:p__io withStruct:p__parent withRoot:p__root];
 }
 
-+ (instancetype) structWith:(kstream *)stream
-{
-    return [[granule_basic_dsk_rsdos_t alloc] initWith:stream withStruct:nil withRoot:nil];
++ (instancetype) structWith:(kstream *)p__io {
+    return [[granule_basic_dsk_rsdos_t alloc] initWith:p__io withStruct:nil withRoot:nil];
 }
 
-- (instancetype) initWith:(kstream *)p__io withStruct:(basic_dsk_rsdos_t *)p__parent withRoot:(basic_dsk_rsdos_t *)p__root
-{
+- (instancetype) initWith:(kstream *)p__io withStruct:(basic_dsk_rsdos_t *)p__parent withRoot:(basic_dsk_rsdos_t *)p__root {
     self = [super initWith:p__io withStruct:p__parent withRoot:p__root];
     if (self) {
         [self _read];
@@ -110,8 +100,7 @@
     return self;
 }
 
--(void)_read
-{
+-(void)_read {
     self.bytes = [self._io read_bytes:(9*256)];
 }
 
@@ -122,18 +111,15 @@
 @dynamic _root;
 @dynamic _parent;
 
-+ initialize:(kstream *)p__io withStruct:(kstruct *)p__parent withRoot: p__root
-{
++ (instancetype) initialize:(kstream *)p__io withStruct:(kstruct *)p__parent withRoot: p__root {
     return [[file_allocation_table_basic_dsk_rsdos_t alloc] initWith:p__io withStruct:p__parent withRoot:p__root];
 }
 
-+ (instancetype) structWith:(kstream *)stream
-{
-    return [[file_allocation_table_basic_dsk_rsdos_t alloc] initWith:stream withStruct:nil withRoot:nil];
++ (instancetype) structWith:(kstream *)p__io {
+    return [[file_allocation_table_basic_dsk_rsdos_t alloc] initWith:p__io withStruct:nil withRoot:nil];
 }
 
-- (instancetype) initWith:(kstream *)p__io withStruct:(basic_dsk_rsdos_t *)p__parent withRoot:(basic_dsk_rsdos_t *)p__root
-{
+- (instancetype) initWith:(kstream *)p__io withStruct:(basic_dsk_rsdos_t *)p__parent withRoot:(basic_dsk_rsdos_t *)p__root {
     self = [super initWith:p__io withStruct:p__parent withRoot:p__root];
     if (self) {
         [self _read];
@@ -141,12 +127,10 @@
     return self;
 }
 
--(void)_read
-{
+-(void)_read {
     NSUInteger l_table = 68;
     self.table = [NSMutableArray arrayWithCapacity:l_table];
-    for ( int i=0; i < l_table; i++)
-    {
+    for ( int i=0; i < l_table; i++) {
         [self.table addObject:(self._io).read_u1];
     }
     self.reserved = [self._io read_bytes:188];
@@ -156,18 +140,15 @@
 
 @implementation file_basic_dsk_rsdos_t
 
-+ initialize:(kstream *)p__io withStruct:(kstruct *)p__parent withRoot: p__root
-{
++ (instancetype) initialize:(kstream *)p__io withStruct:(kstruct *)p__parent withRoot: p__root {
     return [[file_basic_dsk_rsdos_t alloc] initWith:p__io withStruct:p__parent withRoot:p__root];
 }
 
-+ (instancetype) structWith:(kstream *)stream
-{
-    return [[file_basic_dsk_rsdos_t alloc] initWith:stream withStruct:nil withRoot:nil];
++ (instancetype) structWith:(kstream *)p__io {
+    return [[file_basic_dsk_rsdos_t alloc] initWith:p__io withStruct:nil withRoot:nil];
 }
 
-- (instancetype) initWith:(kstream *)p__io withStruct:(kstruct *)p__parent withRoot:(kstruct *)p__root
-{
+- (instancetype) initWith:(kstream *)p__io withStruct:(kstruct *)p__parent withRoot:(kstruct *)p__root {
     self = [super initWith:p__io withStruct:p__parent withRoot:p__root];
     if (self) {
         [self _read];
@@ -175,8 +156,7 @@
     return self;
 }
 
--(void)_read
-{
+-(void)_read {
     self.name = [[[[self._io read_bytes:8] KSBytesStripRightPadByte:32] KSBytesTerminateTerm:32 include:NO] ksBytesToStringWithEncoding:@"ASCII"];
     self.extension = [[[[self._io read_bytes:3] KSBytesStripRightPadByte:32] KSBytesTerminateTerm:32 include:NO] ksBytesToStringWithEncoding:@"ASCII"];
     self.file_type = [(self._io).read_u1 ksENUMWithDictionary:(self._root._enumerations)[@"FILE_TYPE"]];
@@ -195,18 +175,15 @@
 @dynamic body;
 @dynamic next;
 
-+ initialize:(kstream *)p__io withStruct:(kstruct *)p__parent withRoot: p__root
-{
++ (instancetype) initialize:(kstream *)p__io withStruct:(kstruct *)p__parent withRoot: p__root {
     return [[granule_ptr_basic_dsk_rsdos_t alloc] initWith:p__io withStruct:p__parent withRoot:p__root];
 }
 
-+ (instancetype) structWith:(kstream *)stream
-{
-    return [[granule_ptr_basic_dsk_rsdos_t alloc] initWith:stream withStruct:nil withRoot:nil];
++ (instancetype) structWith:(kstream *)p__io {
+    return [[granule_ptr_basic_dsk_rsdos_t alloc] initWith:p__io withStruct:nil withRoot:nil];
 }
 
-- (instancetype) initWith:(kstream *)p__io withStruct:(file_basic_dsk_rsdos_t *)p__parent withRoot:(basic_dsk_rsdos_t *)p__root
-{
+- (instancetype) initWith:(kstream *)p__io withStruct:(file_basic_dsk_rsdos_t *)p__parent withRoot:(basic_dsk_rsdos_t *)p__root {
     self = [super initWith:p__io withStruct:p__parent withRoot:p__root];
     if (self) {
         [self _read];
@@ -214,13 +191,11 @@
     return self;
 }
 
--(void)_read
-{
+-(void)_read {
     self.current_ptr = (self._io).read_u1;
 }
 
--(NSData *)body
-{
+-(NSData *)body {
     if(_body) return _body;
     
     if (self.current_ptr.intValue < 68) {
@@ -232,8 +207,7 @@
     return _body;
 }
 
--(granule_ptr_basic_dsk_rsdos_t *)next
-{
+-(granule_ptr_basic_dsk_rsdos_t *)next {
     if (_next) return _next;
     
     if (self.current_ptr.intValue < 68) {

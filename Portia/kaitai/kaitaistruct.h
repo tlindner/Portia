@@ -10,7 +10,10 @@
 }
 
 - (instancetype)init;
-- (instancetype) initWith:(kstream *)p__io withStruct:(kstruct *)p__parent withRoot: (kstruct *)p__root NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWith:(kstream *)p__io withStruct:(kstruct *)p__parent withRoot: (kstruct *)p__root NS_DESIGNATED_INITIALIZER;
+- (void)_read;
+- (void)_read_le;
+- (void)_read_be;
 
 @property (strong) kstream *_io;
 @property (strong) kstruct *_parent;
