@@ -673,7 +673,7 @@ uint64_t kaitai_kstream_get_mask_ones(unsigned long n);
 #ifdef KS_ZLIB
 #include <zlib.h>
 
--(NSData *)process_zlib(NSData *)data
+-(NSData *)process_zlib:(NSData *)data
 {
     int ret;
     
