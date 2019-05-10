@@ -1,0 +1,3 @@
+[submodule "kaitai_struct_objc_runtime"]
+	path = kaitai_struct_objc_runtime
+	url = https://github.com/tlindner/kaitai_struct_objc_runtime.git
