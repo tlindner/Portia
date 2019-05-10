@@ -89,8 +89,8 @@ NSString * NSDataToHex(NSData *data);
     if (self.rootNode == nil) {
         @try {
             NSURL *fu = [NSURL fileURLWithPath:@"/Users/tlindner/Public/mame/SSC.dsk"];
-            kstream *s = [kstream streamWithURL:fu];
-            self.str = [basic_dsk_rsdos_t structWith:s];
+            KSStream *s = [KSStream streamWithURL:fu];
+            self.str = [KSBasicDskRsdos structWithStream:s];
             
         } @catch (NSException *exception) {
             NSLog( @"exception: %@", exception );

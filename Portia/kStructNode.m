@@ -95,7 +95,7 @@
     if (self.internalChildren == nil || self.childrenDirty) {
 
         if (!self.theObject) {
-            NSLog( @"Error, trying to get children of null" );
+            NSLog( @"kStructNode: Error: trying to get children of null" );
         }
         
         NSMutableDictionary *newChildren = [NSMutableDictionary new];

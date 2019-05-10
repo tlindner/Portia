@@ -18,6 +18,6 @@
 @property (weak) IBOutlet NSBrowser *browser;
 @property (unsafe_unretained) IBOutlet NSTextView *textView;
 
-@property (strong) kstruct *str;
+@property (strong) KSStruct *str;
 @property (strong) kStructNode *rootNode;
 @end
